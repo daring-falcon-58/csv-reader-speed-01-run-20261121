@@ -19,14 +19,19 @@ nearly every line in the drawn files, so nearly every record costs one
 `indexOf` for the line break, one short slice, and one split. Only a line
 that holds a quote (or a stray CR) falls back to a field-by-field reader,
 which itself jumps field to field with `indexOf` and handles quoted content
-a whole segment at a time. Correctness was checked against csv-reader
-itself: 6/6 practice cases identical, 30,124 fuzzed edge inputs identical,
-and 12 freshly drawn generator cases identical.
+a whole segment at a time. And `main.ts` writes each case's answer straight
+to the file as it is rendered instead of collecting all six and joining
+them, so the peak live set stays one case and no 12 MB joined copy is
+ever built. Correctness was checked against csv-reader
+itself: 6/6 practice cases identical, 50,124 fuzzed edge inputs identical,
+and 30 freshly drawn generator cases identical.
 
 Measured on this machine against the practice set (6 cases, ~10.5 MB of
-CSV, 9 fresh-process runs each): the house baseline takes 2.00 s of CPU
-per run on average; this entry takes 0.88 s — about 2.3× faster, with
-byte-identical output. See BENCHMARK.md for the numbers.
+CSV, 9 fresh-process runs each): the house baseline takes 2.75 s of CPU
+per run on average; this entry takes 1.23 s — about 2.2× faster, with
+byte-identical output. Against the previous live entry (R5, same
+machine, alternating fresh runs, 18 rounds each) this entry is 7.9%
+faster (1.26 s vs 1.37 s). See BENCHMARK.md for the numbers.
 
 ## Run it
 
